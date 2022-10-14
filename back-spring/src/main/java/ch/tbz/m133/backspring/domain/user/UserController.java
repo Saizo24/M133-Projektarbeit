@@ -3,11 +3,10 @@ package ch.tbz.m133.backspring.domain.user;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Data
@@ -16,7 +15,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private final UserServiceImpl service;
+    private final UserService service;
 
     @GetMapping("/")
     public List<User> getAllUsers() {
@@ -29,4 +28,13 @@ public class UserController {
         return ResponseEntity.ok().body(service.getUserById(id));
     }
 
+    @PostMapping("/{id}")
+    public ResponseEntity<User> createUser(@PathVariable("id") Long id, @Valid @RequestBody User user) {
+        return ResponseEntity.ok().body(service.createUser(user));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long id) {
+        return ResponseEntity.ok().body(service.deleteUser(id));
+    }
 }

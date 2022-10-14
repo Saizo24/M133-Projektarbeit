@@ -1,4 +1,5 @@
 import { SxProps } from "@mui/material";
+import { CSSProperties } from "@mui/styled-engine";
 
 const title: SxProps = {
     color: "white",
@@ -8,7 +9,16 @@ const title: SxProps = {
 }
 
 const box: SxProps = {
-
+    paddingTop: 2,
+    paddingBotton: 2,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
 }
 
-export default { title, box }
+const img: CSSProperties = {
+    height: "200px",
+    width: "200px"
+}
+
+export default { title, box, img }

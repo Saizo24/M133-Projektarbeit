@@ -1,32 +1,43 @@
 import { SxProps } from "@mui/material"
 import { borderRadius } from "@mui/system"
 
-const loginBoxStyle: SxProps = {
+const box: SxProps = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-around",
     backgroundColor: "white",
     width: "80%",
-    height: "50%",
+    height: "400px",
     maxWidth: "500px",
     paddingTop: 2,
     paddingBottom: 2,
     borderRadius: "10px"
 }
 
-const loginFieldStyle: SxProps = {
+const field: SxProps = {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-evenly",
-    flex: 1,
+    flex: 8,
+    gap: "20px"
 }
 
-const loginButtonStyle: SxProps = {
+const button: SxProps = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-evenly",
     flex: 0.5,
 }
 
-export default { loginBoxStyle, loginFieldStyle, loginButtonStyle }
+const header: SxProps = {
+    flex: 3,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center"
+}
+
+const bottom: SxProps = {
+    flex: 1
+}
+
+export default { box, field, button, header, bottom }

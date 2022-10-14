@@ -1,8 +1,8 @@
-import { Button, Grid, TextField, Typography } from '@mui/material'
+import { Grid, TextField, Typography } from '@mui/material'
 import Box from "@mui/material/Box"
+import LoginButton from '../../atoms/buttons/LoginButton'
 import LoginBoxStyle from './LoginBoxStyle'
-import React from 'react'
-import LoginTitleStyle from '../../molecules/loginTitle/LoginTitleStyle'
+
 
 type Props = {}
 
@@ -17,7 +17,7 @@ const LoginBox = (props: Props) => {
             <Grid item sx={LoginBoxStyle.field}>
                 <TextField label="Username" ></TextField>
                 <TextField label="Password" type="password"></TextField>
-                <Button variant='contained' type='submit'>Login</Button>
+                <LoginButton text='Login'></LoginButton>
             </Grid>
             <Grid item sx={LoginBoxStyle.bottom}>
                 <Typography>

@@ -1,5 +1,4 @@
 package ch.tbz.m133.backspring.domain.authority;
 
-public interface AuthorityService {
-
+public class AuthorityServiceImpl {
 }

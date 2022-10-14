@@ -1,4 +1,4 @@
-import { Card } from '@mui/material'
+import { Grid, Card, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import React, { useEffect, useState } from 'react'
 import ImageIconButton from '../../atoms/buttons/ImageIconButton'
@@ -26,31 +26,44 @@ const ImageCard = ({ type, image, title, size }: Props) => {
     }, [])
 
     let cardSize;
+    let fontSize;
     switch (size) {
         case "small":
             cardSize = 80;
+            fontSize = "6px";
             break;
         case "medium":
             cardSize = 160;
+            fontSize = "12px";
             break;
         case "large":
             cardSize = 240;
+            fontSize = "16px";
             break;
         default:
             cardSize = 80;
     }
     return (
         <Card sx={{ height: cardSize, width: cardSize, backgroundImage: `url(${imageUrl})`, ...ImageCardStyle.card }}
-            onMouseEnter={(e) => setDisplayButton({ display: "block" })}
-            onMouseLeave={(e) => setDisplayButton({ display: "none" })}
+            onMouseOver={(e) => setDisplayButton({ display: "flex" })}
+            onMouseOut={(e) => setDisplayButton({ display: "none" })}
         >
-            {cardType === "Gallery" ? <Box sx={{ ...displayButton, }}>
-                <ImageIconButton buttonType='delete' onClick={handleDeleteClick} size={size}></ImageIconButton>
+            {cardType === "Gallery" && size !== "small" ?
+                <Box sx={{ ...ImageCardStyle.gallery, ...displayButton }}>
+                    <Box sx={ImageCardStyle.deleteButton}>
+                        <ImageIconButton buttonType='delete' onClick={handleDeleteClick} size={size} ></ImageIconButton>
+                    </Box>
+                    {title ?
+                        <Box sx={ImageCardStyle.header}>
+                            <Typography fontSize={fontSize} textAlign="center"><h3>{title}</h3></Typography>
+                        </Box> : <></>
+                    }
+                </Box> : <></>
+            }
+            {cardType === "API" ? <Box sx={{ ...ImageCardStyle.api, ...displayButton }}>
+                <ImageIconButton buttonType='add' onClick={handleDeleteClick} size={size}></ImageIconButton>
             </Box> : <></>
             }
-            <Box>
-
-            </Box>
         </Card>
     )
 }

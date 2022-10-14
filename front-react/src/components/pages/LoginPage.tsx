@@ -1,25 +1,18 @@
-import { Grid, TextField } from '@mui/material'
+import { Button, Grid, TextField } from '@mui/material'
+import Box from "@mui/material/Box"
 import React from 'react'
+import LoginTitle from '../molecules/loginTitle/LoginTitle'
+import LoginBox from '../organisms/loginBox/LoginBox'
+import PageStyle from './PageStyle'
 
 type Props = {}
 
 const LoginPage = (props: Props) => {
     return (
-        <Grid container sm={4} direction="column" spacing={2}>
-            <h1>
-                Login to MyAPIGallery
-            </h1>
-            <Grid item>
-                <TextField label="Username" focused>
-
-                </TextField>
-            </Grid>
-            <Grid item>
-                <TextField label="Password" type="password">
-
-                </TextField>
-            </Grid>
-        </Grid>
+        <Box sx={PageStyle.loginPageStyle} >
+            <LoginTitle></LoginTitle>
+            <LoginBox></LoginBox>
+        </Box>
     )
 }
 

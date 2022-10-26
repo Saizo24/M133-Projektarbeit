@@ -17,6 +17,7 @@ const ImageCard = ({ type, image, title, size }: Props) => {
     const [imageUrl, setImageUrl] = useState(image)
     const [cardType, setCardType] = useState(type)
     const [displayButton, setDisplayButton] = useState({ display: "none" })
+    const [imageSize, setImageSize] = useState(size)
 
     useEffect(() => {
         setImageUrl(image)
@@ -28,7 +29,7 @@ const ImageCard = ({ type, image, title, size }: Props) => {
 
     let cardSize;
     let fontSize;
-    switch (size) {
+    switch (imageSize) {
         case "small":
             cardSize = 80;
             fontSize = "6px";
@@ -47,7 +48,11 @@ const ImageCard = ({ type, image, title, size }: Props) => {
     return (
         <Card sx={{ height: cardSize, width: cardSize, backgroundImage: `url(${imageUrl})`, ...ImageCardStyle.card }}
             onMouseOver={(e) => setDisplayButton({ display: "flex" })}
-            onMouseOut={(e) => setDisplayButton({ display: "none" })}
+            onMouseOut={(e) => {
+                setDisplayButton({ display: "none" })
+                //setImageSize(size)
+            }}
+            onClick={() => setImageSize("medium")}
         >
             {cardType === GalleryType.GALLERY && size !== "small" ?
                 <Box sx={{ ...ImageCardStyle.gallery, ...displayButton }}>
@@ -61,7 +66,7 @@ const ImageCard = ({ type, image, title, size }: Props) => {
                     }
                 </Box> : <></>
             }
-            {cardType === GalleryType.API ? <Box sx={{ ...ImageCardStyle.api, ...displayButton }}>
+            {cardType === GalleryType.API && size !== "small" ? <Box sx={{ ...ImageCardStyle.api, ...displayButton }}>
                 <ImageIconButton buttonType='add' onClick={handleDeleteClick} size={size}></ImageIconButton>
             </Box> : <></>
             }

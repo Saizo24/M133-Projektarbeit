@@ -9,7 +9,7 @@ const LoginTitle = (props: Props) => {
     return (
         <Box sx={LoginTitleStyle.box}>
             <Box>
-                <img src={require("../../../images/logo.png")} alt="logo.png" style={{ height: "300px", width: "300px" }} />
+                <img src={require("../../../images/logo.png")} alt="logo.png" style={{ height: "250px", width: "250px" }} />
             </Box>
             <Typography sx={LoginTitleStyle.title}>
                 <h1>Welcome to MyMemes Gallery</h1>

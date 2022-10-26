@@ -1,11 +1,12 @@
 import { Grid, Card, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import React, { useEffect, useState } from 'react'
+import { GalleryType } from '../../../types/GalleryType'
 import ImageIconButton from '../../atoms/buttons/ImageIconButton'
 import ImageCardStyle from './ImageCardStyle'
 
 type Props = {
-    type: "API" | "Gallery"
+    type: GalleryType
     image: string
     title?: string
     size?: "small" | "medium" | "large"
@@ -48,7 +49,7 @@ const ImageCard = ({ type, image, title, size }: Props) => {
             onMouseOver={(e) => setDisplayButton({ display: "flex" })}
             onMouseOut={(e) => setDisplayButton({ display: "none" })}
         >
-            {cardType === "Gallery" && size !== "small" ?
+            {cardType === GalleryType.GALLERY && size !== "small" ?
                 <Box sx={{ ...ImageCardStyle.gallery, ...displayButton }}>
                     <Box sx={ImageCardStyle.deleteButton}>
                         <ImageIconButton buttonType='delete' onClick={handleDeleteClick} size={size} ></ImageIconButton>
@@ -60,7 +61,7 @@ const ImageCard = ({ type, image, title, size }: Props) => {
                     }
                 </Box> : <></>
             }
-            {cardType === "API" ? <Box sx={{ ...ImageCardStyle.api, ...displayButton }}>
+            {cardType === GalleryType.API ? <Box sx={{ ...ImageCardStyle.api, ...displayButton }}>
                 <ImageIconButton buttonType='add' onClick={handleDeleteClick} size={size}></ImageIconButton>
             </Box> : <></>
             }

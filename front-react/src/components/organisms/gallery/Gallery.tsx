@@ -26,7 +26,7 @@ const Gallery = ({ type, name, apiImageList }: Props) => {
                 {imageList && imageList.length > 1 ? (imageList.map((image) => {
                     return (
                         <Grid item>
-                            <ImageCard type={type} image={image.url} size="medium" />
+                            <ImageCard type={type} image={image} size="small" />
                         </Grid>
                     )
                 })) : (

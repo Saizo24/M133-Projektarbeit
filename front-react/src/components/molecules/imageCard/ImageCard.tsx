@@ -2,57 +2,49 @@ import { Grid, Card, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import React, { useEffect, useState } from 'react'
 import { GalleryType } from '../../../types/GalleryType'
+import { ImageView } from '../../../types/ImageView.model'
 import ImageIconButton from '../../atoms/buttons/ImageIconButton'
 import ImageCardStyle from './ImageCardStyle'
 
 type Props = {
     type: GalleryType
-    image: string
+    image: ImageView
     title?: string
     size?: "small" | "medium" | "large"
 }
 
+const sizes = [
+    { name: "small", cardSize: 80, fontSize: "6px" },
+    { name: "medium", cardSize: 160, fontSize: "12px" },
+    { name: "large", cardSize: 240, fontSize: "16px" }
+]
+
 const ImageCard = ({ type, image, title, size }: Props) => {
 
-    const [imageUrl, setImageUrl] = useState(image)
+    const [imageUrl, setImageUrl] = useState(`${image.baseUrl}/id/${image.id}`)
     const [cardType, setCardType] = useState(type)
     const [displayButton, setDisplayButton] = useState({ display: "none" })
-    const [imageSize, setImageSize] = useState(size)
+    const [sizeIndex, setSizeIndex] = useState(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
 
     useEffect(() => {
-        setImageUrl(image)
-    }, [])
+        setImageUrl(`${image.baseUrl}/id/${image.id}`)
+    }, [image])
 
     useEffect(() => {
         setCardType(type)
     }, [])
 
-    let cardSize;
-    let fontSize;
-    switch (imageSize) {
-        case "small":
-            cardSize = 80;
-            fontSize = "6px";
-            break;
-        case "medium":
-            cardSize = 160;
-            fontSize = "12px";
-            break;
-        case "large":
-            cardSize = 240;
-            fontSize = "16px";
-            break;
-        default:
-            cardSize = 80;
-    }
     return (
-        <Card sx={{ height: cardSize, width: cardSize, backgroundImage: `url(${imageUrl})`, ...ImageCardStyle.card }}
-            onMouseOver={(e) => setDisplayButton({ display: "flex" })}
+        <Card sx={{ height: `${sizes[sizeIndex].cardSize}px`, width: `${sizes[sizeIndex].cardSize}px`, backgroundImage: `url(${imageUrl}/240/240)`, ...ImageCardStyle.card }}
+            onMouseOver={(e) => {
+                setDisplayButton({ display: "flex" })
+                setSizeIndex(size ? sizes.findIndex((cardSize) => cardSize.name === size) + 1 : 1)
+            }
+            }
             onMouseOut={(e) => {
                 setDisplayButton({ display: "none" })
-                //setImageSize(size)
+                setSizeIndex(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
             }}
-            onClick={() => setImageSize("medium")}
         >
             {cardType === GalleryType.GALLERY && size !== "small" ?
                 <Box sx={{ ...ImageCardStyle.gallery, ...displayButton }}>
@@ -61,7 +53,7 @@ const ImageCard = ({ type, image, title, size }: Props) => {
                     </Box>
                     {title ?
                         <Box sx={ImageCardStyle.header}>
-                            <Typography fontSize={fontSize} textAlign="center"><h3>{title}</h3></Typography>
+                            <Typography fontSize={sizes[sizeIndex]} textAlign="center"><h3>{title}</h3></Typography>
                         </Box> : <></>
                     }
                 </Box> : <></>

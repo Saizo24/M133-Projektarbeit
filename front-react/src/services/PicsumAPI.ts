@@ -1,7 +1,9 @@
 import axios, { AxiosInstance } from "axios"
 
-const picsumApi: AxiosInstance = axios.create({
-    baseURL: "https://picsum.photos"
+const BASE_URL = "https://picsum.photos"
+
+const api: AxiosInstance = axios.create({
+    baseURL: BASE_URL
 })
 
-export default picsumApi
+export default { api, BASE_URL }

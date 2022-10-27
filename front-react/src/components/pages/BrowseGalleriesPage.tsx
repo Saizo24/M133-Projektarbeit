@@ -7,27 +7,22 @@ import { ImageView } from '../../types/ImageView.model'
 import Gallery from '../organisms/gallery/Gallery'
 
 const BrowseGalleriesPage = () => {
-    const [galleries, setGalleries] = useState<ImageView[][]>([])
-    const [galleryNames, setGalleryNames] = useState<string[]>([])
+    const [galleries, setGalleries] = useState<{ galleryName: string, imageGallery: ImageView[] }[]>([])
     useEffect(() => {
-
-        ImageServices.forEach((imageService: { name: string, service: ImageService }) => {
-            imageService.service().getPreviewListOfImages().then((data) => {
-                const fetchedData: { id: string, download_url: string }[] = data;
+        ImageServices.forEach((imageService: ImageService) => {
+            imageService().getPreviewListOfImages().then((data) => {
+                console.log(data)
                 const gallery: ImageView[] = []
+                const fetchedData: { id: string, download_url: string }[] = data;
                 fetchedData.forEach((entry) => {
                     const id = entry.id
-                    const url = entry.download_url
-                    gallery.push({ id, url })
-                    console.log(gallery)
+                    gallery.push({ id, baseUrl: imageService().getBaseUrl() })
                 })
                 const newGalleries = Array.from(galleries)
-                newGalleries.push(gallery)
+
+                newGalleries.push({ galleryName: imageService().getServiceName(), imageGallery: gallery })
                 setGalleries(newGalleries)
             })
-            const newGalleryNames = Array.from(galleryNames)
-            newGalleryNames.push(imageService.name)
-            setGalleryNames(newGalleryNames)
         })
     }, [])
     return (
@@ -38,7 +33,7 @@ const BrowseGalleriesPage = () => {
             <Box>
                 {galleries.map((gallery, index) => {
                     return (
-                        <Gallery key={index} type={GalleryType.API} apiImageList={gallery} name={galleryNames[index]} />
+                        <Gallery key={index} type={GalleryType.API} apiImageList={gallery.imageGallery} name={gallery.galleryName} />
                     )
                 })}
             </Box>

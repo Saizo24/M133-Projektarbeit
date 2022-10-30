@@ -9,9 +9,10 @@ type Props = {
     type: GalleryType
     name: string
     apiImageList: ImageView[]
+    size: "small" | "medium" | "large"
 }
 
-const Gallery = ({ type, name, apiImageList }: Props) => {
+const Gallery = ({ type, name, apiImageList, size }: Props) => {
     const [imageList, setImageList] = useState<ImageView[]>([])
     useEffect(() => {
         setImageList(apiImageList)
@@ -22,11 +23,11 @@ const Gallery = ({ type, name, apiImageList }: Props) => {
             <Box>
                 <Typography>{name}</Typography>
             </Box>
-            <Grid container>
+            <Grid container gap={2}>
                 {imageList && imageList.length > 1 ? (imageList.map((image) => {
                     return (
                         <Grid item>
-                            <ImageCard type={type} image={image} size="medium" />
+                            <ImageCard type={type} image={image} size={size} />
                         </Grid>
                     )
                 })) : (

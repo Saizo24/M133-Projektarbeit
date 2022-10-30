@@ -9,7 +9,7 @@ type Props = {}
 
 const LoginPage = (props: Props) => {
     return (
-        <Box sx={PageStyle.loginPageStyle} >
+        <Box sx={{ ...PageStyle.defaultPageStyle, ...PageStyle.loginPageStyle }} >
             <LoginTitle></LoginTitle>
             <LoginBox></LoginBox>
         </Box>

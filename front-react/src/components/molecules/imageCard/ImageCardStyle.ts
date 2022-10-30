@@ -8,7 +8,8 @@ const card: SxProps = {
     display: "flex",
     position: "relative",
     flexDirection: "column",
-    justifyContent: "stretch"
+    justifyContent: "stretch",
+    border: "0px black solid",
 }
 
 const gallery: SxProps = {

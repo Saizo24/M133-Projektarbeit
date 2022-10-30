@@ -24,6 +24,7 @@ const ImageCard = ({ type, image, title, size }: Props) => {
     const [imageUrl, setImageUrl] = useState(image.url)
     const [cardType, setCardType] = useState(type)
     const [displayButton, setDisplayButton] = useState({ display: "none" })
+    const [cardBorderWidth, setCardBorderWidth] = useState("0px")
     const [sizeIndex, setSizeIndex] = useState(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
 
     useEffect(() => {
@@ -34,16 +35,20 @@ const ImageCard = ({ type, image, title, size }: Props) => {
         setCardType(type)
     }, [])
 
+    useEffect(() => {
+        setSizeIndex(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
+    }, [size])
+
     return (
-        <Card sx={{ height: `${sizes[sizeIndex].cardSize}px`, width: `${sizes[sizeIndex].cardSize}px`, ...ImageCardStyle.card }}
+        <Card sx={{ height: `${sizes[sizeIndex].cardSize}px`, width: `${sizes[sizeIndex].cardSize}px`, ...ImageCardStyle.card, borderWidth: cardBorderWidth }}
             onMouseOver={(e) => {
                 setDisplayButton({ display: "flex" })
-                setSizeIndex(size ? sizes.findIndex((cardSize) => cardSize.name === size) + 1 : 1)
+                if (size && size !== "small") setCardBorderWidth("2px")
             }
             }
             onMouseOut={(e) => {
                 setDisplayButton({ display: "none" })
-                setSizeIndex(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
+                if (size && size !== "small") setCardBorderWidth("0px")
             }}
         >
             <Box sx={{ position: "absolute", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>

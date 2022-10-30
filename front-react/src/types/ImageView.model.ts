@@ -1,5 +1,5 @@
 export interface ImageView {
     id: string
-    url: string
+    baseUrl: string
     title?: string
 }

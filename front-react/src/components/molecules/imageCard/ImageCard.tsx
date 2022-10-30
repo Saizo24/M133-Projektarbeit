@@ -21,14 +21,14 @@ const sizes = [
 
 const ImageCard = ({ type, image, title, size }: Props) => {
 
-    const [imageUrl, setImageUrl] = useState(image.url)
+    const [imageUrl, setImageUrl] = useState(`${image.baseUrl}/id/${image.id}`)
     const [cardType, setCardType] = useState(type)
     const [displayButton, setDisplayButton] = useState({ display: "none" })
     const [cardBorderWidth, setCardBorderWidth] = useState("0px")
     const [sizeIndex, setSizeIndex] = useState(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
 
     useEffect(() => {
-        setImageUrl(image.url)
+        setImageUrl(`${image.baseUrl}/id/${image.id}`)
     }, [image])
 
     useEffect(() => {
@@ -40,20 +40,26 @@ const ImageCard = ({ type, image, title, size }: Props) => {
     }, [size])
 
     return (
-        <Card sx={{ height: `${sizes[sizeIndex].cardSize}px`, width: `${sizes[sizeIndex].cardSize}px`, ...ImageCardStyle.card, borderWidth: cardBorderWidth }}
-            onMouseOver={(e) => {
-                setDisplayButton({ display: "flex" })
-                if (size && size !== "small") setCardBorderWidth("2px")
+        <Card sx={{
+            height: `${sizes[sizeIndex].cardSize}px`,
+            width: `${sizes[sizeIndex].cardSize}px`,
+            backgroundImage: `url(${imageUrl}/240/240)`,
+            ...ImageCardStyle.card, borderWidth: cardBorderWidth
+        }}
+            onMouseEnter={(e) => {
+                if (size && size !== "small") {
+                    setDisplayButton({ display: "flex" })
+                    setCardBorderWidth("2px")
+                }
             }
             }
-            onMouseOut={(e) => {
-                setDisplayButton({ display: "none" })
-                if (size && size !== "small") setCardBorderWidth("0px")
+            onMouseLeave={(e) => {
+                if (size && size !== "small") {
+                    setDisplayButton({ display: "none" })
+                    setCardBorderWidth("0px")
+                }
             }}
         >
-            <Box sx={{ position: "absolute", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                <img src={imageUrl} alt="" loading='lazy' style={{ height: `${sizes[sizeIndex].cardSize}px`, width: `${sizes[sizeIndex].cardSize}px`, objectFit: "cover", objectPosition: "" }} />
-            </Box>
             {cardType === GalleryType.GALLERY && size !== "small" ?
                 <Box sx={{ ...ImageCardStyle.gallery, ...displayButton }}>
                     <Box sx={ImageCardStyle.deleteButton}>

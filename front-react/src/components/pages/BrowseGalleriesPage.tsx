@@ -18,10 +18,9 @@ const BrowseGalleriesPage = () => {
                 const fetchedData: { id: string, download_url: string }[] = data;
                 fetchedData.forEach((entry) => {
                     const id = entry.id
-                    gallery.push({ id, url: entry.download_url })
+                    gallery.push({ id, baseUrl: imageService().getBaseUrl() })
                 })
                 const newGalleries = []
-
                 newGalleries.push({ galleryName: imageService().getServiceName(), imageGallery: gallery })
                 setGalleries(newGalleries)
             })
@@ -35,6 +34,9 @@ const BrowseGalleriesPage = () => {
             <Box>
                 <Typography>
                     Browse Galleries - Previews
+                </Typography>
+                <Typography>
+                    Choose a gallery to add Pictures to your own gallery
                 </Typography>
             </Box>
             <Box>

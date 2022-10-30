@@ -21,13 +21,13 @@ const sizes = [
 
 const ImageCard = ({ type, image, title, size }: Props) => {
 
-    const [imageUrl, setImageUrl] = useState(`${image.baseUrl}/id/${image.id}`)
+    const [imageUrl, setImageUrl] = useState(image.url)
     const [cardType, setCardType] = useState(type)
     const [displayButton, setDisplayButton] = useState({ display: "none" })
     const [sizeIndex, setSizeIndex] = useState(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
 
     useEffect(() => {
-        setImageUrl(`${image.baseUrl}/id/${image.id}`)
+        setImageUrl(image.url)
     }, [image])
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const ImageCard = ({ type, image, title, size }: Props) => {
     }, [])
 
     return (
-        <Card sx={{ height: `${sizes[sizeIndex].cardSize}px`, width: `${sizes[sizeIndex].cardSize}px`, backgroundImage: `url(${imageUrl}/240/240)`, ...ImageCardStyle.card }}
+        <Card sx={{ height: `${sizes[sizeIndex].cardSize}px`, width: `${sizes[sizeIndex].cardSize}px`, ...ImageCardStyle.card }}
             onMouseOver={(e) => {
                 setDisplayButton({ display: "flex" })
                 setSizeIndex(size ? sizes.findIndex((cardSize) => cardSize.name === size) + 1 : 1)
@@ -46,6 +46,9 @@ const ImageCard = ({ type, image, title, size }: Props) => {
                 setSizeIndex(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
             }}
         >
+            <Box sx={{ position: "absolute", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+                <img src={imageUrl} alt="" loading='lazy' style={{ height: `${sizes[sizeIndex].cardSize}px`, width: `${sizes[sizeIndex].cardSize}px`, objectFit: "cover", objectPosition: "" }} />
+            </Box>
             {cardType === GalleryType.GALLERY && size !== "small" ?
                 <Box sx={{ ...ImageCardStyle.gallery, ...displayButton }}>
                     <Box sx={ImageCardStyle.deleteButton}>

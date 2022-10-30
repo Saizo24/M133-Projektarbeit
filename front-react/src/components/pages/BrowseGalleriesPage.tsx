@@ -16,7 +16,7 @@ const BrowseGalleriesPage = () => {
                 const fetchedData: { id: string, download_url: string }[] = data;
                 fetchedData.forEach((entry) => {
                     const id = entry.id
-                    gallery.push({ id, baseUrl: imageService().getBaseUrl() })
+                    gallery.push({ id, url: entry.download_url })
                 })
                 const newGalleries = Array.from(galleries)
 

@@ -1,6 +1,6 @@
 package ch.tbz.m133.backspring.domain.user;
 
-import ch.tbz.m133.backspring.config.exceptions.UserExistsException;
+import ch.tbz.m133.backspring.config.exceptions.AlreadyExistsException;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +20,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getUserById(Long id) {
+    public User getUserById(String id) {
         return repository.findById(id).orElseThrow(() -> new NoSuchElementException(String.format(NOTFOUND, id)));
     }
 
     @Override
-    public User createUser(User user) throws UserExistsException{
+    public User createUser(User user) throws AlreadyExistsException {
         if (!repository.existsById(user.getId())) {
             User newUser = new User();
             newUser.setName(user.getName());
@@ -34,12 +34,12 @@ public class UserServiceImpl implements UserService{
             return newUser;
         }
         else {
-            throw new UserExistsException();
+            throw new AlreadyExistsException("username");
         }
     }
 
     @Override
-    public String deleteUser(Long id){
+    public String deleteUser(String id){
         if (repository.existsById(id)) {
             repository.deleteById(id);
             return "User has been deleted";
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateUser(Long id, User user) {
+    public User updateUser(String id, User user) {
         return repository.save(user);
     }
 }

@@ -4,11 +4,12 @@ import { Button } from "@mui/material"
 
 type Props = {
     text: string
+    disabled?: boolean
 }
 
-const LoginButton = ({ text }: Props) => {
+const LoginButton = ({ text, disabled }: Props) => {
     return (
-        <Button variant='contained' type='submit'>{text}</Button>
+        <Button variant='contained' type='submit' disabled={disabled}>{text}</Button>
     )
 }
 

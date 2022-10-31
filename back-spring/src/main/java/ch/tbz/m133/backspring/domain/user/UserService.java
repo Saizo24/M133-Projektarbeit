@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
     List<User> getAllUsers();
 
-    User getUserById(String id);
+    User getUserByName(String username);
 
     User createUser (User user);
 

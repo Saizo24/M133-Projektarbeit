@@ -25,10 +25,10 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById
-        (@PathVariable("id") String id) {
-        return ResponseEntity.ok().body(userService.getUserById(id));
+    @GetMapping("/{username}")
+    public ResponseEntity<User> getUserByName
+        (@PathVariable("username") String username) {
+        return ResponseEntity.ok().body(userService.getUserByName(username));
     }
 
     @PostMapping("/")
@@ -41,7 +41,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.deleteUser(id));
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/{username}/")
     public Set<Picture> getAllPicturesFromUser(@PathVariable("username") String username) {
         return userService.getAllPictures(username);
     }

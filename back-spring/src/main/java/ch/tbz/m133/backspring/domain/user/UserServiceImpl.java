@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getUserById(String id) {
-        return repository.findById(id).orElseThrow(() -> new NoSuchElementException(String.format(NOTFOUND, id)));
+    public User getUserByName(String username) {
+        return repository.findByName(username);
     }
 
     @Override

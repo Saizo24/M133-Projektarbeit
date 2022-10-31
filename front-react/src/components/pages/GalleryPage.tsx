@@ -51,7 +51,6 @@ const GalleryPage = ({ }: Props) => {
         event: SelectChangeEvent
     ) => {
         navigate(`${window.location.pathname}?page=1&limit=${parseInt(event.target.value)}`)
-
     };
 
     return (

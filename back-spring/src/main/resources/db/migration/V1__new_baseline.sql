@@ -22,7 +22,7 @@ CREATE TABLE public.users
 CREATE TABLE public.role
 (
     id          varchar(255) NOT NULL,
-    role_name   varchar(255) NOT NULL,
+    role_name   varchar(255) NULL,
     CONSTRAINT  pk_role PRIMARY KEY (id)
 );
 
@@ -36,7 +36,7 @@ CREATE TABLE public.role
 CREATE TABLE public.authority
 (
     id              varchar(255) NOT NULL,
-    authority_name  varchar(255) NOT NULL,
+    authority_name  varchar(255) NULL,
     CONSTRAINT      pk_authority PRIMARY KEY (id)
 );
 
@@ -84,6 +84,25 @@ CREATE TABLE public.picture
     id          varchar(255) NOT NULL,
     base_url    varchar(255) NOT NULL,
     title       varchar(255) NULL,
-    CONSTRAINT  pk_picture PRIMARY KEY (id)
+    id_users    varchar(255) NULL,
+    CONSTRAINT  pk_picture PRIMARY KEY (id),
+    CONSTRAINT  fk_user FOREIGN KEY (id_users) REFERENCES public.users (id)
+
+);
+
+
+-- public.user_picture definition
+
+-- Drop table
+
+-- DROP TABLE public.user_picture;
+
+CREATE TABLE public.user_picture
+(
+    id_user     varchar(255)   NOT NULL,
+    id_picture  varchar(255)   NOT NULL,
+    CONSTRAINT  user_picture_pk PRIMARY KEY (id_user, id_picture),
+    CONSTRAINT  user_fk FOREIGN KEY (id_user) REFERENCES public.users(id),
+    CONSTRAINT  picture_fk FOREIGN KEY (id_picture) REFERENCES public.picture (id)
 );
 

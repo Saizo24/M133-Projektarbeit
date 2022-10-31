@@ -5,9 +5,11 @@ import LoginTitle from '../molecules/loginTitle/LoginTitle'
 import LoginBox from '../organisms/loginBox/LoginBox'
 import PageStyle from './PageStyle'
 
-type Props = {}
+type Props = {
 
-const LoginPage = (props: Props) => {
+}
+
+const LoginPage = ({ }: Props) => {
     return (
         <Box sx={{ ...PageStyle.defaultPageStyle, ...PageStyle.loginPageStyle }} >
             <LoginTitle></LoginTitle>

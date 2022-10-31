@@ -1,8 +1,7 @@
 import { SxProps } from "@mui/material"
-import zIndex from "@mui/material/styles/zIndex"
-import { relative } from "path"
 
 const card: SxProps = {
+    boxSizing: "border-box",
     backgroundSize: "cover",
     backgroundPosition: "center",
     display: "flex",

@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { ImageView } from '../../types/ImageView.model'
 import ImageServices from '../../services/ImageServices'
 import Box from '@mui/material/Box'
 import { GalleryType } from '../../types/GalleryType'
 import Gallery from '../organisms/gallery/Gallery'
 import PageStyle from './PageStyle'
-import { Typography } from '@mui/material'
+import { Pagination, Typography } from '@mui/material'
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 type Props = {}
 
+const MAX_ENTRIES = 1000
+
 const GalleryPage = ({ }: Props) => {
     const { id } = useParams()
+    const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
-    const [galleries, setGalleries] = useState<{ galleryName: string, imageGallery: ImageView[] }[]>([])
+    const [gallery, setGallery] = useState<{ galleryName: string, imageGallery: ImageView[] }>({ galleryName: "", imageGallery: [] })
+    const [maxEntries, setMaxEntries] = useState(Number(MAX_ENTRIES))
 
     const [pageNumber, setPageNumber] = useState(searchParams.get("page") ? Number(searchParams.get("page")) : 1)
     const [pageLimit, setPageLimit] = useState(searchParams.get("limit") ? Number(searchParams.get("limit")) : 30)
@@ -26,17 +32,26 @@ const GalleryPage = ({ }: Props) => {
     useEffect(() => {
         if (id) {
             ImageServices[Number(id)]().getListOfImages(pageNumber, pageLimit).then((data) => {
-                const gallery: ImageView[] = []
+                const newGallery: { galleryName: string, imageGallery: ImageView[] } = { galleryName: ImageServices[Number(id)]().getServiceName(), imageGallery: [] }
                 const fetchedData: { id: string, download_url: string }[] = data;
                 fetchedData.forEach((entry) => {
-                    gallery.push({ id: entry.id, baseUrl: ImageServices[Number(id)]().getBaseUrl() })
+                    newGallery.imageGallery.push({ id: entry.id, baseUrl: ImageServices[Number(id)]().getBaseUrl() })
                 })
-                const newGalleries = []
-                newGalleries.push({ galleryName: ImageServices[Number(id)]().getServiceName(), imageGallery: gallery })
-                setGalleries(newGalleries)
+                setGallery(newGallery)
             })
         }
-    }, [])
+    }, [pageNumber, pageLimit])
+
+    const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+        navigate(`${window.location.pathname}?page=${value}&limit=${pageLimit}`)
+    };
+
+    const handleChangePageLimit = (
+        event: SelectChangeEvent
+    ) => {
+        navigate(`${window.location.pathname}?page=1&limit=${parseInt(event.target.value)}`)
+
+    };
 
     return (
         <Box sx={{ ...PageStyle.defaultPageStyle }}>
@@ -47,12 +62,31 @@ const GalleryPage = ({ }: Props) => {
                     Click on the Add-Button to add pictures to your gallery
                 </Typography>
                 <Box >
-                    {galleries.map((gallery, index) => {
-                        return (
-                            <Gallery key={index} type={GalleryType.API} apiImageList={gallery.imageGallery} name={gallery.galleryName} size={"medium"} />
-                        )
-                    })}
+                    <Gallery key={id} type={GalleryType.API} apiImageList={gallery.imageGallery} name={gallery.galleryName} size={"medium"} />
                 </Box>
+                <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                    <Pagination
+                        count={Math.floor(maxEntries / pageLimit)}
+                        page={pageNumber}
+                        defaultPage={1}
+                        siblingCount={0}
+                        boundaryCount={2}
+                        onChange={handleChangePage}
+                        showFirstButton showLastButton
+                    />
+                    <Typography>Images per Page:</Typography>
+                    <Select
+                        value={pageLimit.toString()}
+                        onChange={handleChangePageLimit}
+                        size="small"
+                    >
+                        <MenuItem value={30}>30</MenuItem>
+                        <MenuItem value={50}>50</MenuItem>
+                        <MenuItem value={100}>100</MenuItem>
+                    </Select>
+                </Box>
+
+
             </Box>
             <Box>BottomBar</Box>
         </Box>

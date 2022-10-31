@@ -37,6 +37,7 @@ const header: SxProps = {
 }
 
 const bottom: SxProps = {
+    mt: 1,
     flex: 1
 }
 

@@ -8,6 +8,8 @@ import { ImageView } from '../../types/ImageView.model'
 import PaginationBox from '../molecules/paginationBox/PaginationBox'
 import Gallery from '../organisms/gallery/Gallery'
 import PageStyle from './PageStyle'
+import MyNavBar from '../organisms/navbar/MyNavbar'
+import BottomBar from '../organisms/bottombar/BottomBar'
 
 const MAX_ENTRIES = 1000
 
@@ -40,7 +42,9 @@ const UserGalleryPage = () => {
         <Box >
             {username && username.toLowerCase() === AuthService().getUsernameFromStorage()?.toLowerCase() ? (
                 <Box sx={{ ...PageStyle.defaultPageStyle }}>
-                    <Box>Navbar</Box>
+                    <Box sx={{ width: "100%" }}>
+                        <MyNavBar />
+                    </Box>
                     <Box sx={{ ...PageStyle.galleryStyle }}>
                         <h1>Show your Gallery</h1>
                         <Typography>
@@ -53,7 +57,7 @@ const UserGalleryPage = () => {
                             <PaginationBox maxEntries={maxEntries} pageLimit={pageLimit} pageNumber={pageNumber} handleChangePage={handleChangePage} handleChangePageLimit={handleChangePageLimit} />
                         </Box>
                     </Box>
-                    <Box>BottomBar</Box>
+                    <BottomBar />
                 </Box>
             ) : (
                 <Typography>ACCESS DENIED</Typography>

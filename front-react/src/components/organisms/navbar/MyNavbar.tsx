@@ -12,6 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import Logo from '../../../images/logo.png';
+import { useNavigate } from 'react-router-dom';
+import { AuthService, isLoggedIn } from '../../../services/AuthService';
 
 const pages = ["Browse Galleries", "My Gallery"]
 const settings = ['My Gallery', 'Logout'];
@@ -20,6 +23,8 @@ const settings = ['My Gallery', 'Logout'];
 const MyNavbar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+    const navigate = useNavigate()
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -37,11 +42,19 @@ const MyNavbar = () => {
     };
 
     return (
-        <AppBar position="static">
+        <AppBar position="fixed" sx={{ width: "100vw", display: "block" }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Box sx={{ height: "70px", width: "70px", border: "1px solid white", borderRadius: "200px", backgroundImage:  }}>
-
+                    <Box sx={{
+                        height: "70px",
+                        width: "70px",
+                        border: "1px solid white",
+                        borderRadius: "100px",
+                        backgroundImage: `url(${Logo})`,
+                        backgroundSize: "70px",
+                        display: { xs: 'none', md: 'block' }
+                    }}
+                        onClick={() => navigate("/")}>
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -72,46 +85,53 @@ const MyNavbar = () => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem key={pages[0]} onClick={() => {
+                                handleCloseNavMenu()
+                                navigate("/")
+                            }}>
+                                <Typography textAlign="center">{pages[0]}</Typography>
+                            </MenuItem><MenuItem key={pages[1]} onClick={() => {
+                                handleCloseNavMenu()
+                                navigate(`/users/${AuthService().getUsernameFromStorage()?.toString().toLowerCase()}`)
+                            }}>
+                                <Typography textAlign="center">{pages[1]}</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        LOGO
-                    </Typography>
+                    <Box sx={{
+                        flexGrow: 1,
+                        height: "70px",
+                        width: "70px",
+                        backgroundImage: `url(${Logo})`,
+                        backgroundSize: "70px",
+                        backgroundRepeat: "no-repeat",
+                        display: { xs: 'block', md: 'none' }
+                    }}
+                        onClick={() => navigate("/")}>
+                    </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                {page}
-                            </Button>
-                        ))}
+                        <Button
+                            key={pages[0]}
+                            onClick={() => {
+                                navigate("/")
+                            }}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            {pages[0]}
+                        </Button>
+                        <Button
+                            key={pages[1]}
+                            onClick={() => {
+                                navigate(`/users/${AuthService().getUsernameFromStorage()?.toString().toLowerCase()}`)
+                            }}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            {pages[1]}
+                        </Button>
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
+                        <Tooltip title="Open Profile">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt="Profile" />
                             </IconButton>
@@ -132,16 +152,37 @@ const MyNavbar = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                            {isLoggedIn() ? (<>
+                                <MenuItem key={settings[0]} onClick={() => {
+                                    navigate(`/users/${AuthService().getUsernameFromStorage()?.toString().toLowerCase()}`)
+                                    handleCloseUserMenu()
+                                }}>
+                                    <Typography textAlign="center">{settings[0]}</Typography>
                                 </MenuItem>
-                            ))}
+                                <MenuItem key={settings[1]} onClick={() => {
+                                    AuthService().logout()
+                                    handleCloseUserMenu()
+                                    navigate("/login")
+                                }}>
+                                    <Typography textAlign="center">{settings[1]}</Typography>
+                                </MenuItem>
+                            </>
+                            ) : (<>
+                                <MenuItem key={"Login"} onClick={() => {
+                                    navigate("/login")
+                                    handleCloseUserMenu()
+                                }}>
+                                    <Typography textAlign="center">{"Login"}</Typography>
+                                </MenuItem>
+                            </>)}
+
                         </Menu>
+
+
                     </Box>
                 </Toolbar>
             </Container>
-        </AppBar>
+        </AppBar >
     );
 }
 

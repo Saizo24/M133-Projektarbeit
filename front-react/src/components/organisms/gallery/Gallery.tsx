@@ -21,9 +21,9 @@ const Gallery = ({ type, name, apiImageList, size }: Props) => {
     }, [apiImageList]);
 
     return (
-        <Box sx={{ flex: 1 }}>
+        <Box sx={{ ...GalleryStyle.box }}>
             <Box>
-                <Typography>{name}</Typography>
+                <Typography><h2>{name}</h2></Typography>
             </Box>
             <Grid container spacing={2} sx={{ flex: 1 }}>
                 {imageList && imageList.length > 1 ? (imageList.map((image) => {

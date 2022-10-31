@@ -14,7 +14,8 @@ const loginPageStyle: SxProps = {
 }
 
 const browserPageStyle: SxProps = {
-
+    border: "1px solid black",
+    borderRadius: "5px"
 }
 
 const galleryStyle: SxProps = {

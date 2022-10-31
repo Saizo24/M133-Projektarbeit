@@ -33,6 +33,7 @@ export const AuthService = () => ({
     },
     logout: () => {
         localStorage.removeItem(TOKEN_NAME);
+        localStorage.removeItem(USER_NAME_HEADER)
     },
     getUsernameFromStorage: () => {
         return localStorage.getItem(USER_NAME_HEADER)

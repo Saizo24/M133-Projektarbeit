@@ -9,6 +9,7 @@ import Gallery from '../organisms/gallery/Gallery'
 import PageStyle from './PageStyle'
 import "./Gallery.css"
 import { useNavigate } from 'react-router-dom'
+import MyNavBar from '../organisms/navbar/MyNavbar'
 
 const BrowseGalleriesPage = () => {
     const [galleries, setGalleries] = useState<{ galleryName: string, imageGallery: ImageView[] }[]>([])
@@ -30,12 +31,12 @@ const BrowseGalleriesPage = () => {
     }, [])
     return (
         <Box sx={{ ...PageStyle.defaultPageStyle, ...PageStyle.browserPageStyle }}>
-            <Box>
-                Navbar
+            <Box sx={{ width: "100%" }}>
+                <MyNavBar />
             </Box>
             <Box>
                 <Typography>
-                    Browse Galleries - Previews
+                    <h1>Browse Galleries - Previews</h1>
                 </Typography>
                 <Typography>
                     Choose a gallery to add Pictures to your own gallery
@@ -44,7 +45,7 @@ const BrowseGalleriesPage = () => {
             <Box>
                 {galleries.map((gallery, index) => {
                     return (
-                        <Box className='galleryBox' onClick={() => navigate(`/gallery/${index}`)}>
+                        <Box className='galleryBox' onClick={() => navigate(`/gallery/${index}`)} sx={{ ...PageStyle.browserPageStyle }}>
                             <Gallery
                                 key={index}
                                 type={GalleryType.API}

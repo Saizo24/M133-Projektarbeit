@@ -38,11 +38,18 @@ const ImageCard = ({ type, image, title, size }: Props) => {
         setSizeIndex(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
     }, [size])
 
+    const openInNewTab = (url: string): void => {
+        const newWindow = window.open(`${url}/1200`, '_blank', 'noopener,noreferrer')
+        if (newWindow) {
+            newWindow.opener = null
+        }
+    }
+
     return (
         <Card sx={{
             height: `${sizes[sizeIndex].cardSize}px`,
             width: `${sizes[sizeIndex].cardSize}px`,
-            backgroundImage: `url(${imageUrl}/240/240)`,
+            backgroundImage: `url(${imageUrl}/240)`,
             ...ImageCardStyle.card, borderWidth: isHovering ? "1px" : "0px"
         }}
             onMouseEnter={(e) => {
@@ -52,6 +59,12 @@ const ImageCard = ({ type, image, title, size }: Props) => {
             onMouseLeave={(e) => {
                 setIsHovering(false)
             }}
+            onClick={() => {
+                if (size && size !== "small") {
+                    openInNewTab(imageUrl)
+                }
+            }}
+
         >
             {cardType === GalleryType.GALLERY && size !== "small" ?
                 <Box sx={{ ...ImageCardStyle.gallery, display: isHovering ? "flex" : "none" }}>

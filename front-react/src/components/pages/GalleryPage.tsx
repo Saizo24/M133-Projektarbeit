@@ -4,7 +4,7 @@ import { ImageView } from '../../types/ImageView.model'
 import ImageServices from '../../services/ImageServices'
 import Box from '@mui/material/Box'
 import { GalleryType } from '../../types/GalleryType'
-import Gallery from '../../components/organisms/gallery/Gallery'
+import Gallery from '../organisms/gallery/Gallery'
 
 type Props = {}
 

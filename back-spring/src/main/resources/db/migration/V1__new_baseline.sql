@@ -7,8 +7,8 @@
 CREATE TABLE public.users
 (
     id          varchar(255) NOT NULL,
-    user_name   varchar(255) NOT NULL,
-    user_pw     varchar(255) NOT NULL,
+    name        varchar(255) NOT NULL,
+    password     varchar(255) NOT NULL,
     CONSTRAINT  pk_users PRIMARY KEY (id)
 );
 

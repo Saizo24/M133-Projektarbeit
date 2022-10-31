@@ -68,6 +68,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             .sign(Algorithm.HMAC256(jwtProperties.getSecret().getBytes()));
         res.addHeader(jwtProperties.getHeaderString(), jwtProperties.getTokenPrefix() + " " + accessToken);
         res.addHeader("Access-Control-Expose-Headers", jwtProperties.getHeaderString());
+        res.addHeader("username", user.getUsername());
 
         log.info("JWT set in header for user '{}'", user.getUsername());
 

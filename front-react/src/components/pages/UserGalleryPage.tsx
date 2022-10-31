@@ -1,6 +1,6 @@
 import { SelectChangeEvent, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { AuthService } from '../../services/AuthService'
 import { GalleryType } from '../../types/GalleryType'
@@ -21,6 +21,11 @@ const UserGalleryPage = () => {
     const [pageNumber, setPageNumber] = useState(searchParams.get("page") ? Number(searchParams.get("page")) : 1)
     const [pageLimit, setPageLimit] = useState(searchParams.get("limit") ? Number(searchParams.get("limit")) : 30)
 
+    useEffect(() => {
+        setPageNumber(searchParams.get("page") ? Number(searchParams.get("page")) : 1)
+        setPageLimit(searchParams.get("limit") ? Number(searchParams.get("limit")) : 30)
+    }, [searchParams])
+
     const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         navigate(`${window.location.pathname}?page=${value}&limit=${pageLimit}`)
     };
@@ -32,14 +37,14 @@ const UserGalleryPage = () => {
     };
 
     return (
-        <Box>
-            {username === AuthService().getUsernameFromStorage() ? (
-                <Box>
+        <Box >
+            {username && username.toLowerCase() === AuthService().getUsernameFromStorage()?.toLowerCase() ? (
+                <Box sx={{ ...PageStyle.defaultPageStyle }}>
                     <Box>Navbar</Box>
                     <Box sx={{ ...PageStyle.galleryStyle }}>
-                        <h1>Show Gallery</h1>
+                        <h1>Show your Gallery</h1>
                         <Typography>
-                            Click on the Add-Button to add pictures to your gallery
+                            Enjoy your Gallery
                         </Typography>
                         <Box >
                             <Gallery type={GalleryType.API} apiImageList={gallery.imageGallery} name={gallery.galleryName} size={"medium"} />

@@ -1,6 +1,8 @@
 import { SxProps } from "@mui/material";
 
 const defaultPageStyle: SxProps = {
+    minHeight: "100vh",
+    minWidth: "100vw",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -20,8 +22,8 @@ const galleryStyle: SxProps = {
     width: "80%",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
-
+    alignItems: "center",
+    flex: 1
 }
 
 export default { defaultPageStyle, loginPageStyle, browserPageStyle, galleryStyle }

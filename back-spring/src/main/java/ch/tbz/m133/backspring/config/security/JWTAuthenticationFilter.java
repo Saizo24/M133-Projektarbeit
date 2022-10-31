@@ -43,9 +43,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         throws AuthenticationException {
         try {
             User credentials = new ObjectMapper().readValue(req.getInputStream(), User.class);
-            log.info("User '{}' login attempt", credentials.getName());
+            log.info("User '{}' login attempt", credentials.getUsername());
             UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(credentials.getName(), credentials.getPassword());
+                new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword());
             return authenticationManager.authenticate(authenticationToken);
         }
         catch (IOException e) {

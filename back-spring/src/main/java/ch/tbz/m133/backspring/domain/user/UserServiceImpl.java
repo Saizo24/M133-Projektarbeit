@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
             User newUser = new User();
             newUser.setName(user.getName());
             newUser.setPassword(user.getPassword());
-            newUser.setRole(user.getRole());
+            newUser.setRoles(user.getRoles());
             return newUser;
         }
         else {

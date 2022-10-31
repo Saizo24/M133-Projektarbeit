@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Data
@@ -24,8 +25,8 @@ public class User {
   @Column(name = "user_pw")
   private String password;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "role_id"))
-  private Role role;
+  private Set<Role> roles;
 }

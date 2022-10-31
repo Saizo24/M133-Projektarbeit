@@ -5,7 +5,7 @@ import { GalleryType } from '../../../types/GalleryType'
 import { ImageView } from '../../../types/ImageView.model'
 import ImageCard from '../../molecules/imageCard/ImageCard'
 import GalleryStyle from './GalleryStyle'
-import "./Gallery.css"
+
 
 type Props = {
     type: GalleryType
@@ -21,7 +21,7 @@ const Gallery = ({ type, name, apiImageList, size }: Props) => {
     }, []);
 
     return (
-        <Box className='galleryBox' sx={{ ...GalleryStyle.box }}>
+        <Box>
             <Box>
                 <Typography>{name}</Typography>
             </Box>

@@ -23,9 +23,8 @@ const ImageCard = ({ type, image, title, size }: Props) => {
 
     const [imageUrl, setImageUrl] = useState(`${image.baseUrl}/id/${image.id}`)
     const [cardType, setCardType] = useState(type)
-    const [displayButton, setDisplayButton] = useState({ display: "none" })
-    const [cardBorderWidth, setCardBorderWidth] = useState("0px")
     const [sizeIndex, setSizeIndex] = useState(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
+    const [isHovering, setIsHovering] = useState(false)
 
     useEffect(() => {
         setImageUrl(`${image.baseUrl}/id/${image.id}`)
@@ -44,24 +43,18 @@ const ImageCard = ({ type, image, title, size }: Props) => {
             height: `${sizes[sizeIndex].cardSize}px`,
             width: `${sizes[sizeIndex].cardSize}px`,
             backgroundImage: `url(${imageUrl}/240/240)`,
-            ...ImageCardStyle.card, borderWidth: cardBorderWidth
+            ...ImageCardStyle.card, borderWidth: isHovering ? "1px" : "0px"
         }}
             onMouseEnter={(e) => {
-                if (size && size !== "small") {
-                    setDisplayButton({ display: "flex" })
-                    setCardBorderWidth("2px")
-                }
+                setIsHovering(size && size !== "small" ? true : false)
             }
             }
             onMouseLeave={(e) => {
-                if (size && size !== "small") {
-                    setDisplayButton({ display: "none" })
-                    setCardBorderWidth("0px")
-                }
+                setIsHovering(false)
             }}
         >
             {cardType === GalleryType.GALLERY && size !== "small" ?
-                <Box sx={{ ...ImageCardStyle.gallery, ...displayButton }}>
+                <Box sx={{ ...ImageCardStyle.gallery, display: isHovering ? "flex" : "none" }}>
                     <Box sx={ImageCardStyle.deleteButton}>
                         <ImageIconButton buttonType='delete' onClick={handleDeleteClick} size={size} ></ImageIconButton>
                     </Box>
@@ -72,7 +65,7 @@ const ImageCard = ({ type, image, title, size }: Props) => {
                     }
                 </Box> : <></>
             }
-            {cardType === GalleryType.API && size !== "small" ? <Box sx={{ ...ImageCardStyle.api, ...displayButton }}>
+            {cardType === GalleryType.API && size !== "small" ? <Box sx={{ ...ImageCardStyle.api, display: isHovering ? "flex" : "none" }}>
                 <ImageIconButton buttonType='add' onClick={handleDeleteClick} size={size}></ImageIconButton>
             </Box> : <></>
             }

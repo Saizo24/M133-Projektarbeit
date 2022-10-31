@@ -11,7 +11,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<BrowseGalleriesPage />} />
-          <Route path="/browseGalleres/" element={<BrowseGalleriesPage />} />
+          <Route path="/browseGalleries/" element={<BrowseGalleriesPage />} />
           <Route path="/gallery/:id" element={<GalleryPage />} />
         </Routes>
       </BrowserRouter>

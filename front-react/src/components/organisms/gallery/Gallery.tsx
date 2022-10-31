@@ -18,7 +18,7 @@ const Gallery = ({ type, name, apiImageList, size }: Props) => {
     const [imageList, setImageList] = useState<ImageView[]>([])
     useEffect(() => {
         setImageList(apiImageList)
-    }, []);
+    }, [apiImageList]);
 
     return (
         <Box>
@@ -33,7 +33,7 @@ const Gallery = ({ type, name, apiImageList, size }: Props) => {
                         </Grid>
                     )
                 })) : (
-                    <Grid>
+                    <Grid item>
                         No images available
                     </Grid>
                 )

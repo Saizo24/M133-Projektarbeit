@@ -1,10 +1,11 @@
 import { Grid, Card, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
-import React, { MouseEventHandler, useEffect, useState } from 'react'
+import React, { MouseEventHandler, useEffect, useState, useContext } from 'react'
 import { GalleryType } from '../../../types/GalleryType'
 import { ImageView } from '../../../types/ImageView.model'
 import ImageIconButton from '../../atoms/buttons/ImageIconButton'
 import ImageCardStyle from './ImageCardStyle'
+import SnackBarContext from "../../other/context/snackBars/SnackBarContext";
 
 type Props = {
     type: GalleryType
@@ -26,6 +27,8 @@ const ImageCard = ({ type, image, title, size }: Props) => {
     const [sizeIndex, setSizeIndex] = useState(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
     const [isHovering, setIsHovering] = useState(false)
 
+    const { showSnackBar } = useContext(SnackBarContext);
+
     useEffect(() => {
         setImageUrl(`${image.baseUrl}/id/${image.id}`)
     }, [image])
@@ -43,6 +46,15 @@ const ImageCard = ({ type, image, title, size }: Props) => {
         if (newWindow) {
             newWindow.opener = null
         }
+    }
+
+    const handleDeleteClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+        e.stopPropagation()
+    }
+
+    const handleAddClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+        e.stopPropagation()
+        showSnackBar("Image added to your gallery", "success")
     }
 
     return (
@@ -79,19 +91,13 @@ const ImageCard = ({ type, image, title, size }: Props) => {
                 </Box> : <></>
             }
             {cardType === GalleryType.API && size !== "small" ? <Box sx={{ ...ImageCardStyle.api, display: isHovering ? "flex" : "none" }}>
-                <ImageIconButton buttonType='add' onClick={handleDeleteClick} size={size}></ImageIconButton>
+                <ImageIconButton buttonType='add' onClick={handleAddClick} size={size}></ImageIconButton>
             </Box> : <></>
             }
         </Card>
     )
 }
 
-const handleDeleteClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.stopPropagation()
-}
 
-const handleAddClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.stopPropagation()
-}
 
 export default ImageCard

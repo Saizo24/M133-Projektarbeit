@@ -1,7 +1,6 @@
 import { SxProps } from "@mui/material";
 
 const defaultPageStyle: SxProps = {
-    width: "100vw",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

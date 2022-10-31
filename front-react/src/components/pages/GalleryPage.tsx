@@ -9,6 +9,7 @@ import PageStyle from './PageStyle'
 import { Pagination, Typography } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import PaginationBox from '../molecules/paginationBox/PaginationBox'
 
 type Props = {}
 
@@ -64,29 +65,9 @@ const GalleryPage = ({ }: Props) => {
                 <Box >
                     <Gallery key={id} type={GalleryType.API} apiImageList={gallery.imageGallery} name={gallery.galleryName} size={"medium"} />
                 </Box>
-                <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                    <Pagination
-                        count={Math.floor(maxEntries / pageLimit)}
-                        page={pageNumber}
-                        defaultPage={1}
-                        siblingCount={0}
-                        boundaryCount={2}
-                        onChange={handleChangePage}
-                        showFirstButton showLastButton
-                    />
-                    <Typography>Images per Page:</Typography>
-                    <Select
-                        value={pageLimit.toString()}
-                        onChange={handleChangePageLimit}
-                        size="small"
-                    >
-                        <MenuItem value={30}>30</MenuItem>
-                        <MenuItem value={50}>50</MenuItem>
-                        <MenuItem value={100}>100</MenuItem>
-                    </Select>
+                <Box>
+                    <PaginationBox maxEntries={maxEntries} pageLimit={pageLimit} pageNumber={pageNumber} handleChangePage={handleChangePage} handleChangePageLimit={handleChangePageLimit} />
                 </Box>
-
-
             </Box>
             <Box>BottomBar</Box>
         </Box>

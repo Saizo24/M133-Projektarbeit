@@ -12,10 +12,10 @@ function App() {
     <SnackbarContextProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<BrowseGalleriesPage />} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/register/" element={<RegisterUserPage />} />
-          <Route path="/users/:id" element={<UserGalleryPage />} />
-          <Route path="/browseGalleries/" element={<BrowseGalleriesPage />} />
+          <Route path="/users/:username" element={<UserGalleryPage />} />
+          <Route path="/browse-galleries/" element={<BrowseGalleriesPage />} />
           <Route path="/gallery/:id" element={<GalleryPage />} />
         </Routes>
       </BrowserRouter>

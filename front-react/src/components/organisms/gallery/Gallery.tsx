@@ -28,7 +28,7 @@ const Gallery = ({ type, name, apiImageList, size }: Props) => {
             <Grid container spacing={2} sx={{ width: "80vw" }}>
                 {imageList && imageList.length > 1 ? (imageList.map((image) => {
                     return (
-                        <Grid item xs={6} sm={4} md={2.4} lg={2.4}>
+                        <Grid item xs={6} sm={4} md={2.4} lg={2.4} sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
                             <ImageCard type={type} image={image} size={size} />
                         </Grid>
                     )

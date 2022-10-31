@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import { GalleryType } from '../../types/GalleryType'
 import Gallery from '../organisms/gallery/Gallery'
 import PageStyle from './PageStyle'
+import { Typography } from '@mui/material'
 
 type Props = {}
 
@@ -39,15 +40,23 @@ const GalleryPage = ({ }: Props) => {
 
     return (
         <Box sx={{ ...PageStyle.defaultPageStyle }}>
-            <h1>Show Gallery</h1>
-            <Box>
-                {galleries.map((gallery, index) => {
-                    return (
-                        <Gallery key={index} type={GalleryType.API} apiImageList={gallery.imageGallery} name={gallery.galleryName} size={"medium"} />
-                    )
-                })}
+            <Box>Navbar</Box>
+            <Box sx={{ ...PageStyle.galleryStyle }}>
+                <h1>Show Gallery</h1>
+                <Typography>
+                    Click on the Add-Button to add pictures to your gallery
+                </Typography>
+                <Box >
+                    {galleries.map((gallery, index) => {
+                        return (
+                            <Gallery key={index} type={GalleryType.API} apiImageList={gallery.imageGallery} name={gallery.galleryName} size={"medium"} />
+                        )
+                    })}
+                </Box>
             </Box>
+            <Box>BottomBar</Box>
         </Box>
+
     )
 }
 

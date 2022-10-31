@@ -1,6 +1,6 @@
 import { Grid, Card, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
-import React, { useEffect, useState } from 'react'
+import React, { MouseEventHandler, useEffect, useState } from 'react'
 import { GalleryType } from '../../../types/GalleryType'
 import { ImageView } from '../../../types/ImageView.model'
 import ImageIconButton from '../../atoms/buttons/ImageIconButton'
@@ -86,8 +86,12 @@ const ImageCard = ({ type, image, title, size }: Props) => {
     )
 }
 
-const handleDeleteClick = () => {
+const handleDeleteClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation()
+}
 
+const handleAddClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation()
 }
 
 export default ImageCard

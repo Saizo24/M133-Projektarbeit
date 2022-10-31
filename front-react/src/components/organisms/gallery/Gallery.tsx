@@ -25,10 +25,10 @@ const Gallery = ({ type, name, apiImageList, size }: Props) => {
             <Box>
                 <Typography>{name}</Typography>
             </Box>
-            <Grid container gap={2}>
+            <Grid container spacing={2} sx={{ width: "80vw" }}>
                 {imageList && imageList.length > 1 ? (imageList.map((image) => {
                     return (
-                        <Grid item>
+                        <Grid item xs={6} sm={4} md={2.4} lg={2.4}>
                             <ImageCard type={type} image={image} size={size} />
                         </Grid>
                     )
@@ -39,7 +39,7 @@ const Gallery = ({ type, name, apiImageList, size }: Props) => {
                 )
                 }
             </Grid>
-        </Box>
+        </Box >
     )
 }
 

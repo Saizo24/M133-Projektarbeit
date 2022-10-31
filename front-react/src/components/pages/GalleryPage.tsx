@@ -5,6 +5,7 @@ import ImageServices from '../../services/ImageServices'
 import Box from '@mui/material/Box'
 import { GalleryType } from '../../types/GalleryType'
 import Gallery from '../organisms/gallery/Gallery'
+import PageStyle from './PageStyle'
 
 type Props = {}
 
@@ -37,7 +38,7 @@ const GalleryPage = ({ }: Props) => {
     }, [])
 
     return (
-        <div>
+        <Box sx={{ ...PageStyle.defaultPageStyle }}>
             <h1>Show Gallery</h1>
             <Box>
                 {galleries.map((gallery, index) => {
@@ -46,7 +47,7 @@ const GalleryPage = ({ }: Props) => {
                     )
                 })}
             </Box>
-        </div>
+        </Box>
     )
 }
 

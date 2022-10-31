@@ -1,6 +1,7 @@
 import { SxProps } from "@mui/material"
 
 const card: SxProps = {
+    boxSizing: "border-box",
     backgroundSize: "cover",
     backgroundPosition: "center",
     display: "flex",

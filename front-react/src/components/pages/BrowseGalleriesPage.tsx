@@ -7,13 +7,15 @@ import { ImageService } from '../../types/ImageService.model'
 import { ImageView } from '../../types/ImageView.model'
 import Gallery from '../organisms/gallery/Gallery'
 import PageStyle from './PageStyle'
+import "./Gallery.css"
+import { useNavigate } from 'react-router-dom'
 
 const BrowseGalleriesPage = () => {
     const [galleries, setGalleries] = useState<{ galleryName: string, imageGallery: ImageView[] }[]>([])
+    const navigate = useNavigate();
     useEffect(() => {
         ImageServices.forEach((imageService: ImageService) => {
             imageService().getPreviewListOfImages().then((data) => {
-                console.log(data)
                 const gallery: ImageView[] = []
                 const fetchedData: { id: string, download_url: string }[] = data;
                 fetchedData.forEach((entry) => {
@@ -42,7 +44,14 @@ const BrowseGalleriesPage = () => {
             <Box>
                 {galleries.map((gallery, index) => {
                     return (
-                        <Gallery key={index} type={GalleryType.API} apiImageList={gallery.imageGallery} name={gallery.galleryName} size={"small"} />
+                        <Box className='galleryBox' onClick={() => navigate(`/gallery/${index}`)}>
+                            <Gallery
+                                key={index}
+                                type={GalleryType.API}
+                                apiImageList={gallery.imageGallery}
+                                name={gallery.galleryName}
+                                size={"small"} />
+                        </Box>
                     )
                 })}
             </Box>

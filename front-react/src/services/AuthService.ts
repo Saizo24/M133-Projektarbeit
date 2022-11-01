@@ -1,5 +1,7 @@
 import { clearAuthTokens } from "axios-jwt";
+import { useNavigate } from "react-router-dom";
 import api from "./API";
+import * as jwt from 'jsonwebtoken';
 
 const TOKEN_NAME: string = "accessToken";
 const USER_NAME_HEADER: string = "sub"
@@ -13,6 +15,14 @@ type Props = {
     username: string;
     password: string;
 };
+
+type JWTType = {
+    sub: string
+    iss: string
+    exp: number
+}
+
+const navigate = useNavigate()
 
 export const AuthService = () => ({
     login: async (values: Props) => {
@@ -36,6 +46,7 @@ export const AuthService = () => ({
         clearAuthTokens()
         localStorage.removeItem(TOKEN_NAME);
         localStorage.removeItem(USER_NAME_HEADER)
+        navigate("/login")
     },
     getUsernameFromStorage: () => {
         return localStorage.getItem(USER_NAME_HEADER)
@@ -43,14 +54,16 @@ export const AuthService = () => ({
 });
 
 export const isLoggedIn = () => {
-    const accessToken = localStorage.getItem("accessToken")
-    if (!accessToken || accessToken === null) {
-        console.log("is false")
+    let accessToken = localStorage.getItem("accessToken")
+    if (!accessToken) {
         return false
     }
-    const { sub } = parseJwt(accessToken.substring("Bearer ".length))
-    console.log(sub === AuthService().getUsernameFromStorage())
-    return sub === AuthService().getUsernameFromStorage()
+    accessToken = accessToken.substring("Bearer ".length)
+    const token: JWTType = jwt.decode(accessToken) as JWTType
+    if (!token || !token.exp || token.exp < Date.now() / 1000 || token.sub !== AuthService().getUsernameFromStorage()) {
+        return false
+    }
+    return true
 }
 
 export const parseJwt = (jwt: string) => {

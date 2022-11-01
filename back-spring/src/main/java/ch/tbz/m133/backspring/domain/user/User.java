@@ -19,8 +19,8 @@ import java.util.Set;
 public class User extends ExtendedEntity {
 
   @NotNull
-  @Column(name = "name")
-  private String name;
+  @Column(name = "username")
+  private String username;
 
   @NotNull
   @Column(name = "password")

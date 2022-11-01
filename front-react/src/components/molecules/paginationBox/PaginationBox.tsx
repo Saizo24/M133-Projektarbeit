@@ -3,6 +3,7 @@ import React, { ChangeEvent, ReactNode } from 'react'
 import { Pagination, Typography } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import PaginationBoxStyle from './PaginationBoxStyle';
 
 type Props = {
     maxEntries: number
@@ -14,7 +15,7 @@ type Props = {
 
 const PaginationBox = ({ maxEntries, pageLimit, pageNumber, handleChangePage, handleChangePageLimit }: Props) => {
     return (
-        <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+        <Box sx={{ ...PaginationBoxStyle.box }}>
             <Pagination
                 count={Math.floor(maxEntries / pageLimit)}
                 page={pageNumber}

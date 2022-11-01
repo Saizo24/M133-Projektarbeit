@@ -1,3 +1,4 @@
+import { clearAuthTokens } from "axios-jwt";
 import api from "./API";
 
 const TOKEN_NAME: string = "accessToken";
@@ -32,14 +33,27 @@ export const AuthService = () => ({
             });
     },
     logout: () => {
+        clearAuthTokens()
         localStorage.removeItem(TOKEN_NAME);
+        localStorage.removeItem(USER_NAME_HEADER)
     },
     getUsernameFromStorage: () => {
         return localStorage.getItem(USER_NAME_HEADER)
     },
 });
 
-const parseJwt = (jwt: string) => {
+export const isLoggedIn = () => {
+    const accessToken = localStorage.getItem("accessToken")
+    if (!accessToken || accessToken === null) {
+        console.log("is false")
+        return false
+    }
+    const { sub } = parseJwt(accessToken.substring("Bearer ".length))
+    console.log(sub === AuthService().getUsernameFromStorage())
+    return sub === AuthService().getUsernameFromStorage()
+}
+
+export const parseJwt = (jwt: string) => {
     if (!jwt) {
         return
     }

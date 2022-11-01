@@ -44,7 +44,7 @@ const LoginBox = () => {
                     AuthService()
                         .login(values)
                         .then((response) => {
-                            navigate("/browse-galleries/");
+                            navigate("/");
                         })
                         .catch((error) => {
                             showSnackBar("Username or password wrong", "error");
@@ -69,7 +69,7 @@ const LoginBox = () => {
             </Formik>
             <Grid item sx={LoginBoxStyle.bottom}>
                 <Typography>
-                    <p>No Account yet? </p><Link underline="hover" href="/register">Sign up here!</Link>
+                    No Account yet? <Link underline="hover" href="/register">Sign up here!</Link>
                 </Typography>
             </Grid>
         </Box >

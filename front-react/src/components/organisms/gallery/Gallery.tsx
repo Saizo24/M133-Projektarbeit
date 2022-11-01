@@ -21,11 +21,11 @@ const Gallery = ({ type, name, apiImageList, size }: Props) => {
     }, [apiImageList]);
 
     return (
-        <Box>
+        <Box sx={{ ...GalleryStyle.box }}>
             <Box>
-                <Typography>{name}</Typography>
+                <Typography><h2>{name}</h2></Typography>
             </Box>
-            <Grid container spacing={2} sx={{ width: "80vw" }}>
+            <Grid container spacing={2} sx={{ flex: 1 }}>
                 {imageList && imageList.length > 1 ? (imageList.map((image) => {
                     return (
                         <Grid item xs={6} sm={4} md={2.4} lg={2.4} sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>

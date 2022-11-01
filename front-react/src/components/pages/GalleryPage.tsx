@@ -10,6 +10,8 @@ import { Pagination, Typography } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import PaginationBox from '../molecules/paginationBox/PaginationBox'
+import MyNavBar from '../organisms/navbar/MyNavbar'
+import BottomBar from '../organisms/bottombar/BottomBar'
 
 type Props = {}
 
@@ -51,13 +53,12 @@ const GalleryPage = ({ }: Props) => {
         event: SelectChangeEvent
     ) => {
         navigate(`${window.location.pathname}?page=1&limit=${parseInt(event.target.value)}`)
-
     };
 
     return (
         <Box sx={{ ...PageStyle.defaultPageStyle }}>
-            <Box>Navbar</Box>
-            <Box sx={{ ...PageStyle.galleryStyle }}>
+            <MyNavBar />
+            <Box sx={{ ...PageStyle.galleryStyle, flex: 1 }}>
                 <h1>Show Gallery</h1>
                 <Typography>
                     Click on the Add-Button to add pictures to your gallery
@@ -69,7 +70,7 @@ const GalleryPage = ({ }: Props) => {
                     <PaginationBox maxEntries={maxEntries} pageLimit={pageLimit} pageNumber={pageNumber} handleChangePage={handleChangePage} handleChangePageLimit={handleChangePageLimit} />
                 </Box>
             </Box>
-            <Box>BottomBar</Box>
+            <BottomBar />
         </Box>
 
     )

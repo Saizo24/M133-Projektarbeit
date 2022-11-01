@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService{
         if (!repository.existsById(user.getId())) {
             User newUser = new User();
             newUser.setId(user.getId());
-            newUser.setName(user.getName());
+            newUser.setUsername(user.getUsername());
             newUser.setPassword(passwordEncoder.encode(user.getPassword()));
             newUser.setRoles(user.getRoles());
             newUser = repository.save(newUser);
@@ -105,6 +105,6 @@ public class UserServiceImpl implements UserService{
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> role.getAuthorities()
             .forEach(authority -> authorities.add(new SimpleGrantedAuthority(authority.getName()))));
-        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), authorities);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 }

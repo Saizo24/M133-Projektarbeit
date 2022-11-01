@@ -1,4 +1,5 @@
 import api from "./API";
+import {User} from "../types/User.model"
 
 const TOKEN_NAME: string = "accessToken";
 const USER_NAME_HEADER: string = "sub"
@@ -36,6 +37,12 @@ export const AuthService = () => ({
     },
     getUsernameFromStorage: () => {
         return localStorage.getItem(USER_NAME_HEADER)
+    },
+
+    createUser: async(user: User) => {
+        await api.post("/users/register", user).then((res) => {
+            return res.data;
+        });
     },
 });
 

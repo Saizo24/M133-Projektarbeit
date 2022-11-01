@@ -1,5 +1,4 @@
 import { SxProps } from "@mui/material"
-import { borderRadius } from "@mui/system"
 
 const box: SxProps = {
     display: "flex",

@@ -14,7 +14,7 @@ import BottomBar from '../organisms/bottombar/BottomBar'
 const MAX_ENTRIES = 1000
 
 const UserGalleryPage = () => {
-    const { username } = useParams()
+    const username = AuthService().getUsernameFromStorage()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
     const [gallery, setGallery] = useState<{ galleryName: string, imageGallery: ImageView[] }>({ galleryName: "", imageGallery: [] })

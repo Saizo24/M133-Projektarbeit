@@ -24,7 +24,7 @@ function App() {
           <Route path="/" element={<BrowseGalleriesPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register/" element={<RegisterUserPage />} />
-          <Route path='/users/:username' element={
+          <Route path='/users/' element={
             <ProtectedRoute
               isAuthenticated={isLoggedIn()}
               authenticationPath={defaultProtectedRouteProps.authenticationPath}

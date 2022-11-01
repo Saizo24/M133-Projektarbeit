@@ -9,7 +9,7 @@ import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
-public class ExtendedEntity {
+public abstract class ExtendedEntity {
 
     @Id
     @GeneratedValue(generator = "system-uuid")

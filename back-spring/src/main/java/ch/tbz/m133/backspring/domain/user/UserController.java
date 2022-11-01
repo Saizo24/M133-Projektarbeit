@@ -1,7 +1,6 @@
 package ch.tbz.m133.backspring.domain.user;
 
 import ch.tbz.m133.backspring.domain.picture.Picture;
-import ch.tbz.m133.backspring.domain.picture.PictureServiceImpl;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +30,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserByName(username));
     }
 
-    @PostMapping("/")
+    @PostMapping("/register")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         return ResponseEntity.ok().body(userService.createUser(user));
     }

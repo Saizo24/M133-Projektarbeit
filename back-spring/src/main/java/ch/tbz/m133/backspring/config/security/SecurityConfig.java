@@ -41,7 +41,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http.csrf().disable()
-            .authorizeRequests(requests -> requests.antMatchers(HttpMethod.POST, "/").permitAll())
+            .authorizeRequests(requests -> requests.antMatchers(HttpMethod.POST, "/" , "/register", "/login").permitAll())
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors()
             .configurationSource(corsConfigurationSource()).and().authorizeRequests().antMatchers("/**").authenticated()
             .and().addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtProperties))

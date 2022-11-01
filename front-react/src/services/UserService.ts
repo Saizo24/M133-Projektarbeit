@@ -1,9 +1,16 @@
 import { ImageService } from "../types/ImageService.model";
 import api from "./API";
+import { User } from "../types/User.model"
 
 const USER_NAME_HEADER = "sub";
 
-export const PictureService = () => ({
+export const UserService = () => ({
+
+    createUser: async (username: string, password: string) => {
+        await api.post("/users/register", { username, password }).then((res) => {
+            return res.data;
+        });
+    },
 
     getAllPicturesFromUser: async () => {
         const username = localStorage.getItem(USER_NAME_HEADER)
@@ -28,5 +35,4 @@ export const PictureService = () => ({
         });
         return data.data;
     }
-  });
-  
+});

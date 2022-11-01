@@ -4,9 +4,10 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { TextField, Box, Typography, Link, Button, Grid } from "@mui/material";
 import SnackBarContext from "../../other/context/snackBars/SnackBarContext";
-import { AuthService } from "../../../services/AuthService";
+
 import RegisterBoxStyle from "./RegisterBoxStyle";
 import MyTextfield from "../../atoms/textfield/MyTextfield";
+import { UserService } from "../../../services/UserService";
 
 interface FormValues {
   username: string;
@@ -39,12 +40,8 @@ export default function RegisterBox() {
           values: FormValues,
           formikHelpers: FormikHelpers<FormValues>
         ) => {
-          const user = {
-            username: values.username,
-            password: values.password,
-          };
-          AuthService()
-            .createUser(user)
+          UserService()
+            .createUser(values.username, values.password)
             .then((res) => {
               navigate("/login/");
             })

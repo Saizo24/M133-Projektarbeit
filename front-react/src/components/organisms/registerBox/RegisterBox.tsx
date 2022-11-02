@@ -7,7 +7,7 @@ import SnackBarContext from "../../other/context/snackBars/SnackBarContext";
 
 import RegisterBoxStyle from "./RegisterBoxStyle";
 import MyTextfield from "../../atoms/textfield/MyTextfield";
-import { UserService } from "../../../services/UserService";
+import { AuthService } from "../../../services/AuthService";
 
 interface FormValues {
   username: string;
@@ -15,8 +15,8 @@ interface FormValues {
 }
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required("enterusername"),
-  password: yup.string().required("enterpassword").min(8, "errorpassword"),
+  username: yup.string().required("Please enter your Username"),
+  password: yup.string().required("Please enter your Password").min(8, "Password must be longer at least 8 characters"),
 });
 
 export default function RegisterBox() {
@@ -40,10 +40,10 @@ export default function RegisterBox() {
           values: FormValues,
           formikHelpers: FormikHelpers<FormValues>
         ) => {
-          UserService()
-            .createUser(values.username, values.password)
+          AuthService()
+            .register(values)
             .then((res) => {
-              navigate("/login/");
+              navigate("/");
             })
             .catch((error) => {
               showSnackBar("Invalid Entry", "error");
@@ -54,7 +54,10 @@ export default function RegisterBox() {
         {(formikProps: FormikProps<FormValues>) => (
           <Form noValidate autoComplete="off">
             <Grid item sx={RegisterBoxStyle.field}>
-              <Field name="username" label="username" component={MyTextfield} />
+              <Field
+                name="username"
+                label="username"
+                component={MyTextfield} />
               <Field
                 name="password"
                 label="password"

@@ -32,10 +32,12 @@ const UserGalleryPage = () => {
             navigate("/login")
         } else {
             UserService().getAllPicturesFromUser().then((data) => {
-                console.log(data)
                 const { pictures } = data
                 setMaxEntries(pictures.length)
-                setGallery({ galleryName: "", pictures })
+                const sortedPictures: ImageView[] = pictures
+                setGallery({
+                    galleryName: "", pictures: sortedPictures.sort((pictureA: ImageView, pictureB: ImageView) => { return Number(pictureA.imageId) - Number(pictureB.imageId) })
+                })
             })
         }
 

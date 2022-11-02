@@ -1,4 +1,5 @@
 import { Navigate } from 'react-router-dom';
+import { isLoggedIn } from '../../../services/AuthService';
 
 export type ProtectedRouteProps = {
   isAuthenticated: boolean;
@@ -6,8 +7,9 @@ export type ProtectedRouteProps = {
   outlet: JSX.Element;
 };
 
-export const ProtectedRoute = ({isAuthenticated, authenticationPath, outlet}: ProtectedRouteProps) => {
-  if (isAuthenticated) {
+export const ProtectedRoute = ({ isAuthenticated, authenticationPath, outlet }: ProtectedRouteProps) => {
+  if (isLoggedIn()) {
+    console.log("Protected Route authenticated")
     return outlet;
   }
 

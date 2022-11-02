@@ -23,7 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<BrowseGalleriesPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/register/" element={<RegisterUserPage />} />
+          <Route path="/register" element={<RegisterUserPage />} />
           <Route path='/users/' element={
             <ProtectedRoute
               isAuthenticated={isLoggedIn()}

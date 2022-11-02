@@ -1,5 +1,6 @@
 import { clearAuthTokens } from "axios-jwt";
 import api from "./API";
+import { UserService } from "./UserService";
 
 
 const TOKEN_NAME: string = "accessToken";
@@ -38,11 +39,15 @@ export const AuthService = () => ({
             .catch(function (err) {
                 throw err;
             });
+
     },
     logout: () => {
         clearAuthTokens()
         localStorage.removeItem(TOKEN_NAME);
         localStorage.removeItem(USER_NAME_HEADER)
+    },
+    register: async (values: Props) => {
+        UserService().createUser(values.username, values.password)
     },
     getUsernameFromStorage: () => {
         return localStorage.getItem(USER_NAME_HEADER)
@@ -50,15 +55,18 @@ export const AuthService = () => ({
 });
 
 export const isLoggedIn = () => {
-    let accessToken = localStorage.getItem("accessToken")
+    let accessToken = localStorage.getItem(TOKEN_NAME)
     if (!accessToken) {
+        console.log("access token not set")
         return false
     }
     accessToken = accessToken.substring("Bearer ".length)
     const token: JWTType = parseJwt(accessToken) as JWTType
     if (!token || !token.exp || token.exp < Date.now() / 1000 || token.sub.toLocaleLowerCase() !== AuthService().getUsernameFromStorage()?.toLocaleLowerCase()) {
+        console.log("access token not valid")
         return false
     }
+    console.log("access token valid")
     return true
 }
 

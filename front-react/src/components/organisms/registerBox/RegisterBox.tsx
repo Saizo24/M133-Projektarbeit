@@ -78,7 +78,7 @@ export default function RegisterBox() {
           component="button"
           variant="body2"
           sx={{ color: "#444444", ml: "10%" }}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/login")}
         >
           "Already have an Account? Login Here."
         </Link>

@@ -11,7 +11,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import Logo from '../../../images/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { AuthService, isLoggedIn } from '../../../services/AuthService';
@@ -92,7 +91,7 @@ const MyNavbar = () => {
                                 <Typography textAlign="center">{pages[0]}</Typography>
                             </MenuItem><MenuItem key={pages[1]} onClick={() => {
                                 handleCloseNavMenu()
-                                navigate(`/users/${AuthService().getUsernameFromStorage()?.toString().toLowerCase()}`)
+                                navigate("/users/")
                             }}>
                                 <Typography textAlign="center">{pages[1]}</Typography>
                             </MenuItem>
@@ -122,7 +121,7 @@ const MyNavbar = () => {
                         <Button
                             key={pages[1]}
                             onClick={() => {
-                                navigate(`/users/${AuthService().getUsernameFromStorage()?.toString().toLowerCase()}`)
+                                navigate("/users/")
                             }}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
@@ -154,7 +153,7 @@ const MyNavbar = () => {
                         >
                             {isLoggedIn() ? (<>
                                 <MenuItem key={settings[0]} onClick={() => {
-                                    navigate(`/users/${AuthService().getUsernameFromStorage()?.toString().toLowerCase()}`)
+                                    navigate("/users/")
                                     handleCloseUserMenu()
                                 }}>
                                     <Typography textAlign="center">{settings[0]}</Typography>

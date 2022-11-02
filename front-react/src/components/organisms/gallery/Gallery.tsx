@@ -26,15 +26,16 @@ const Gallery = ({ type, name, apiImageList, size }: Props) => {
                 <Typography><h2>{name}</h2></Typography>
             </Box>
             <Grid container spacing={2} sx={{ flex: 1 }}>
-                {imageList && imageList.length > 1 ? (imageList.map((image) => {
+                {imageList && imageList.length >= 1 ? (imageList.map((image) => {
                     return (
                         <Grid item xs={6} sm={4} md={2.4} lg={2.4} sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
-                            <ImageCard type={type} image={image} size={size} />
+                            <ImageCard type={type} image={image} size={size} imageList={imageList} setImageList={setImageList} />
                         </Grid>
                     )
                 })) : (
-                    <Grid item>
-                        No images available
+                    <Grid item sx={{ flex: 1 }}>
+                        <Typography sx={{ textAlign: "center" }}>No images available</Typography>
+
                     </Grid>
                 )
                 }

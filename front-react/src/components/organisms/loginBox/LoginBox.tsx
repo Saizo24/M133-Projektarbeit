@@ -45,7 +45,7 @@ const LoginBox = () => {
           AuthService()
             .login(values)
             .then((response) => {
-              navigate("/browse-galleries/");
+              navigate("/");
             })
             .catch((error) => {
               showSnackBar("Username or password wrong", "error");

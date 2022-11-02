@@ -17,7 +17,7 @@ const PaginationBox = ({ maxEntries, pageLimit, pageNumber, handleChangePage, ha
     return (
         <Box sx={{ ...PaginationBoxStyle.box }}>
             <Pagination
-                count={Math.floor(maxEntries / pageLimit)}
+                count={Math.ceil(maxEntries / pageLimit)}
                 page={pageNumber}
                 defaultPage={1}
                 siblingCount={0}

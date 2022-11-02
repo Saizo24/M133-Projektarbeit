@@ -38,8 +38,9 @@ const GalleryPage = ({ }: Props) => {
                 const newGallery: { galleryName: string, imageGallery: ImageView[] } = { galleryName: ImageServices[Number(id)]().getServiceName(), imageGallery: [] }
                 const fetchedData: { id: string, download_url: string }[] = data;
                 fetchedData.forEach((entry) => {
-                    newGallery.imageGallery.push({ id: entry.id, baseUrl: ImageServices[Number(id)]().getBaseUrl() })
+                    newGallery.imageGallery.push({ id: entry.id, imageId: entry.id, baseURL: ImageServices[Number(id)]().getBaseUrl() })
                 })
+                console.log(newGallery)
                 setGallery(newGallery)
             })
         }
@@ -63,7 +64,7 @@ const GalleryPage = ({ }: Props) => {
                 <Typography>
                     Click on the Add-Button to add pictures to your gallery
                 </Typography>
-                <Box >
+                <Box sx={{ width: "100%" }}>
                     <Gallery key={id} type={GalleryType.API} apiImageList={gallery.imageGallery} name={gallery.galleryName} size={"medium"} />
                 </Box>
                 <Box>

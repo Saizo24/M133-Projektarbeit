@@ -1,6 +1,7 @@
 import { ImageService } from "../types/ImageService.model";
 import api from "./API";
 import { User } from "../types/User.model"
+import { ImageView } from "../types/ImageView.model";
 
 const USER_NAME_HEADER = "sub";
 
@@ -20,17 +21,17 @@ export const UserService = () => ({
         return data.data;
     },
 
-    addPictureToUserList: async () => {
+    addPictureToUserList: async (image: ImageView) => {
         const username = localStorage.getItem(USER_NAME_HEADER)
-        const data = await api.put(`/users/${username}`).catch((error) => {
+        const data = await api.put(`/users/${username}`, image).catch((error) => {
             throw error;
         });
         return data.data;
     },
 
-    deletePictureFromUserList: async () => {
+    deletePictureFromUserList: async (image: ImageView) => {
         const username = localStorage.getItem(USER_NAME_HEADER)
-        const data = await api.delete(`/users/${username}`).catch((error) => {
+        const data = await api.delete(`/users/${username}/${image.id}`,).catch((error) => {
             throw error;
         });
         return data.data;

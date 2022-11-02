@@ -1,5 +1,8 @@
+import { User } from "./User.model"
+
 export interface ImageView {
     id: string
-    baseUrl: string
+    imageId: string
+    baseURL: string
     title?: string
 }

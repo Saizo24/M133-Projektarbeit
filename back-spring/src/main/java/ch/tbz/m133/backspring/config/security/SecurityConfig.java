@@ -41,7 +41,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http.csrf().disable()
-            .authorizeRequests(requests -> requests.antMatchers(HttpMethod.POST, "/" , "/register", "/login").permitAll())
+            .authorizeRequests(requests -> requests.antMatchers(HttpMethod.POST, "/" , "/register", "/users/register", "/login").permitAll())
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors()
             .configurationSource(corsConfigurationSource()).and().authorizeRequests().antMatchers("/**").authenticated()
             .and().addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtProperties))
@@ -51,7 +51,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*"));
+        configuration.setAllowedOrigins(List.of("*", "http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         configuration.setExposedHeaders(List.of("Authorization"));

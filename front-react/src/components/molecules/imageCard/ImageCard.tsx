@@ -6,12 +6,15 @@ import { ImageView } from '../../../types/ImageView.model'
 import ImageIconButton from '../../atoms/buttons/ImageIconButton'
 import ImageCardStyle from './ImageCardStyle'
 import SnackBarContext from "../../other/context/snackBars/SnackBarContext";
+import { UserService } from '../../../services/UserService'
 
 type Props = {
     type: GalleryType
     image: ImageView
     title?: string
     size?: "small" | "medium" | "large"
+    imageList: ImageView[]
+    setImageList: Function
 }
 
 const sizes = [
@@ -20,9 +23,10 @@ const sizes = [
     { name: "large", cardSize: 240, fontSize: "16px" }
 ]
 
-const ImageCard = ({ type, image, title, size }: Props) => {
+const ImageCard = ({ type, image, title, size, imageList, setImageList }: Props) => {
 
-    const [imageUrl, setImageUrl] = useState(`${image.baseUrl}/id/${image.id}`)
+    const [showImage, setShowImage] = useState(image)
+    const [imageUrl, setImageUrl] = useState(`${image.baseURL}/id/${image.imageId}`)
     const [cardType, setCardType] = useState(type)
     const [sizeIndex, setSizeIndex] = useState(size ? sizes.findIndex((cardSize) => cardSize.name === size) : 0)
     const [isHovering, setIsHovering] = useState(false)
@@ -30,7 +34,8 @@ const ImageCard = ({ type, image, title, size }: Props) => {
     const { showSnackBar } = useContext(SnackBarContext);
 
     useEffect(() => {
-        setImageUrl(`${image.baseUrl}/id/${image.id}`)
+        setImageUrl(`${image.baseURL}/id/${image.imageId}`)
+        setShowImage(image)
     }, [image])
 
     useEffect(() => {
@@ -50,10 +55,16 @@ const ImageCard = ({ type, image, title, size }: Props) => {
 
     const handleDeleteClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.stopPropagation()
+        UserService().deletePictureFromUserList(showImage)
+        const newImageList = Array.from(imageList)
+        newImageList.splice(newImageList.indexOf(showImage), 1)
+        setImageList(newImageList)
     }
 
     const handleAddClick: MouseEventHandler<HTMLButtonElement> = (e) => {
         e.stopPropagation()
+        console.log(showImage)
+        UserService().addPictureToUserList(showImage)
         showSnackBar("Image added to your gallery", "success")
     }
 
@@ -90,9 +101,10 @@ const ImageCard = ({ type, image, title, size }: Props) => {
                     }
                 </Box> : <></>
             }
-            {cardType === GalleryType.API && size !== "small" ? <Box sx={{ ...ImageCardStyle.api, display: isHovering ? "flex" : "none" }}>
-                <ImageIconButton buttonType='add' onClick={handleAddClick} size={size}></ImageIconButton>
-            </Box> : <></>
+            {cardType === GalleryType.API && size !== "small" ?
+                <Box sx={{ ...ImageCardStyle.api, display: isHovering ? "flex" : "none" }}>
+                    <ImageIconButton buttonType='add' onClick={handleAddClick} size={size}></ImageIconButton>
+                </Box> : <></>
             }
         </Card>
     )

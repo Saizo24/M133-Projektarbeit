@@ -3,6 +3,8 @@ package ch.tbz.m133.backspring.domain.user;
 import ch.tbz.m133.backspring.config.generic.ExtendedEntity;
 import ch.tbz.m133.backspring.domain.picture.Picture;
 import ch.tbz.m133.backspring.domain.role.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,7 +33,7 @@ public class User extends ExtendedEntity {
       inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id"))
   private Set<Role> roles;
 
-  @OneToMany(mappedBy = "id")
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<Picture> pictures;
 
 }

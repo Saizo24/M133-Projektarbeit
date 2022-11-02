@@ -21,8 +21,7 @@ const BrowseGalleriesPage = () => {
                 const gallery: ImageView[] = []
                 const fetchedData: { id: string, download_url: string }[] = data;
                 fetchedData.forEach((entry) => {
-                    const id = entry.id
-                    gallery.push({ id, baseUrl: imageService().getBaseUrl() })
+                    gallery.push({ id: entry.id, imageId: entry.id, baseURL: imageService().getBaseUrl() })
                 })
                 const newGalleries = []
                 newGalleries.push({ galleryName: imageService().getServiceName(), imageGallery: gallery })

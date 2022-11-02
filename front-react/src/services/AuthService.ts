@@ -1,7 +1,5 @@
 import { clearAuthTokens } from "axios-jwt";
-import { useNavigate } from "react-router-dom";
 import api from "./API";
-import * as jwt from 'jsonwebtoken';
 
 
 const TOKEN_NAME: string = "accessToken";
@@ -22,8 +20,6 @@ type JWTType = {
     iss: string
     exp: number
 }
-
-const navigate = useNavigate()
 
 export const AuthService = () => ({
     login: async (values: Props) => {
@@ -47,7 +43,6 @@ export const AuthService = () => ({
         clearAuthTokens()
         localStorage.removeItem(TOKEN_NAME);
         localStorage.removeItem(USER_NAME_HEADER)
-        navigate("/login")
     },
     getUsernameFromStorage: () => {
         return localStorage.getItem(USER_NAME_HEADER)
@@ -60,8 +55,8 @@ export const isLoggedIn = () => {
         return false
     }
     accessToken = accessToken.substring("Bearer ".length)
-    const token: JWTType = jwt.decode(accessToken) as JWTType
-    if (!token || !token.exp || token.exp < Date.now() / 1000 || token.sub !== AuthService().getUsernameFromStorage()) {
+    const token: JWTType = parseJwt(accessToken) as JWTType
+    if (!token || !token.exp || token.exp < Date.now() / 1000 || token.sub.toLocaleLowerCase() !== AuthService().getUsernameFromStorage()?.toLocaleLowerCase()) {
         return false
     }
     return true
@@ -74,5 +69,6 @@ export const parseJwt = (jwt: string) => {
     const payloadUrl = jwt.split(".")[1]
     const payload = payloadUrl.replace("-", "+").replace("_", "/")
     const payloadJson = JSON.parse(window.atob(payload))
+    console.log(payloadJson)
     return payloadJson
 }

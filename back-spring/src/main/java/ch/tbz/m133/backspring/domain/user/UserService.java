@@ -16,7 +16,7 @@ public interface UserService extends UserDetailsService {
 
     User updateUser(String id, User user);
 
-    User addPictureToUser(Picture picture, String username);
+    void addPictureToUser(Picture picture, String username);
 
     void deletePictureById(String username, String id);
 
